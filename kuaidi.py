@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return u'zhe shi 一个 shenqi de 网zhan!'
+    return u'''zhe shi 一个 shenqi de 网zhan! dai wo 们走近人jian de天堂。'''
 
 
 @app.route('/<company>/<postid>')
