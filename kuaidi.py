@@ -8,6 +8,11 @@ from company_map import COMPANY_MAP
 app = Flask(__name__)
 
 
+@app.route('/')
+def index():
+    return u'zhe shi 一个 shenqi de 网zhan!'
+
+
 @app.route('/<company>/<postid>')
 def latest_post_info(company, postid):
     company = COMPANY_MAP.get(company.replace(" ", "").upper())
