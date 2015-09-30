@@ -2,9 +2,13 @@
 # encoding: utf-8
 import logging
 import requests
+from flask import Flask
 from company_map import COMPANY_MAP
 
+app = Flask(__name__)
 
+
+@app.route('/<company>/<postid>')
 def latest_post_info(company, postid):
     company = COMPANY_MAP.get(company.replace(" ", "").upper())
     if not company:
@@ -17,7 +21,7 @@ def latest_post_info(company, postid):
         return u"%s-%s" % (data['time'], data['context'])
     else:
         logging.warning(data)
-        return data['message']
+        return u'%s' % data['message'].split(u'：')[-1]
 
 if __name__ == '__main__':
-    print latest_post_info(u'韵达', 1201838722623)
+    app.run()
