@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # encoding: utf-8
-import logging
+import json
 import requests
-from flask import Flask
+from flask import Flask, Response
 from company_map import COMPANY_MAP
 
 app = Flask(__name__)
@@ -21,12 +21,8 @@ def latest_post_info(company, postid):
     url = "http://www.kuaidi100.com/query?type=%s&postid=%s"
     resp = requests.get(url % (company, postid))
     data = resp.json()
-    if data['status'] == "200":
-        data = data['data'][0]
-        return u"%s-%s" % (data['time'], data['context'])
-    else:
-        logging.warning(data)
-        return u'%s' % data['message'].split(u'：')[-1]
+    return Response(json.dumps(data, ensure_ascii=False),
+                    mimetype='application/json')
 
 if __name__ == '__main__':
     app.run()
